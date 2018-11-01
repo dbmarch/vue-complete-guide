@@ -43,8 +43,8 @@
         </section>
         <section class="row log">
             <div class="small-12 columns">
-                <ul v-for="entry in history">
-                    <li :class=entry.class>
+                <ul>
+                    <li v-for="entry in history" :class=entry.class>
                         {{entry.log}}
                     </li>
                 </ul>
