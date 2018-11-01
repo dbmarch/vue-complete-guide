@@ -134,7 +134,7 @@
                     let className = '';
                     if (from === 'monster') className = 'monster-turn'
                     if (from === 'player') className = 'player-turn'
-                    this.history.push({ class: className, log: transaction })
+                    this.history.unshift({ class: className, log: transaction })
                 },
 
                 hit(scale) {
