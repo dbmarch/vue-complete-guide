@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <div id="app">
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" v-bind:style="playerStyle">
+                        {{player.health}}
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" v-bind:style="monsterStyle">
+                        {{monster.health}}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row controls" v-if="!gameInProgress">
+            <div class="small-12 columns">
+                <button id="start-game" @click="start">START NEW GAME</button>
+            </div>
+        </section>
+        <section class="row controls" v-else>
+            <div class="small-12 columns">
+                <button id="attack" @click="attack">ATTACK</button>
+                <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+                <button id="heal" @click="heal">HEAL</button>
+                <button id="give-up" @click="quit">GIVE UP</button>
+            </div>
+        </section>
+        <section class="row log">
+            <div class="small-12 columns">
+                <ul v-for="entry in history">
+                    <li :class=entry.class>
+                        {{entry.log}}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                gameInProgress: false,
+                player: {
+                    health: 100,
+                    userStyle: {
+                        backgroundColor: 'green',
+                        margin: 0,
+                        color: 'white',
+                        width: 100
+                    }
+                },
+                monster: {
+                    health: 100,
+                    userStyle: {
+                        backgroundColor: 'green',
+                        margin: 0,
+                        color: 'white',
+                        width: 100
+                    }
+                },
+                history: []
+            },
+            computed: {
+                playerStyle: function () {
+                    this.player.userStyle.width = this.player.health + '%'
+                    return (this.player.userStyle)
+                },
+                monsterStyle: function () {
+                    this.monster.userStyle.width = this.monster.health + '%'
+                    return (this.monster.userStyle)
+                },
+            },
+            watch: {
+                gameInProgress: function () {
+                    //console.log('watch')
+                    if (!this.gameInProgress)
+                        this.determineWinner();
+                }
+
+            },
+
+
+            methods: {
+                start() {
+                    console.log('start');
+                    this.history = [];
+
+                    this.gameInProgress = true;
+                    this.player.health = 100;
+                    this.monster.health = 100;
+
+                },
+                attack() {
+                    console.log('attack')
+                    this.playerTurn();
+                    this.monsterTurn();
+                },
+                specialAttack() {
+                    console.log('specialAttack')
+                    this.playerTurn(true);
+                    this.monsterTurn(true);
+
+                },
+                heal() {
+                    console.log('heal')
+                    this.playerHeal();
+                    this.monsterTurn();
+                },
+                quit() {
+                    console.log('quit')
+
+                    this.gameInProgress = false;
+
+                },
+                log(from, transaction) {
+                    console.log(transaction);
+                    //console.log(this.history);
+                    let className = '';
+                    if (from === 'monster') className = 'monster-turn'
+                    if (from === 'player') className = 'player-turn'
+                    this.history.push({ class: className, log: transaction })
+                },
+
+                hit(scale) {
+                    if (!this.gameInProgress)
+                        return (0);
+                    if (scale === undefined)
+                        scale = 1
+                    let dmg = scale * Math.trunc(Math.random() * 10 + 1);
+                    //console.log("Damage value: ", dmg);
+                    return (dmg);
+                },
+
+                monsterTurn(specialAttack) {
+                    let dmg = this.hit(specialAttack ? 2 : 1);
+                    this.player.health -= dmg;
+                    if (this.player.health < 0) {
+                        this.player.health = 0;
+                        this.gameInProgress = false;
+                    }
+                    this.log('monster', `MONSTER HITS PLAYER FOR ${dmg}`)
+                },
+
+                playerTurn(specialAttack) {
+                    let dmg = this.hit(specialAttack ? 2 : 1);
+                    this.monster.health -= dmg;
+                    if (this.monster.health < 0) {
+                        this.monster.health = 0;
+                        this.gameInProgress = false;
+                    }
+                    this.log('player', `PLAYER HITS MONSTER FOR ${dmg}`)
+                },
+
+                playerHeal() {
+                    dmg = this.hit(1)
+                    this.player.health += dmg;
+                    if (this.player.health > 100)
+                        this.player.health = 100
+
+                    this.log('player', `PLAYER HEALS SELF FOR ${dmg}`)
+                },
+
+                determineWinner() {
+                    if (this.player.health === this.monster.health)
+                        this.log('', "GAME IS DRAW.")
+                    else if (this.player.health > this.monster.health)
+                        this.log('', 'PLAYER WINS!');
+                    else
+                        this.log('', 'MONSTER WINS!');
+                }
+
+            }
+
+        });
+    </script>
+</body>
+
+</html>
