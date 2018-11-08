@@ -1,21 +1,13 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <server-status>
-                </server-status>    
-            </div>
-        </div>
+        <server-status>
+        </server-status>    
         <hr>
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <server-list>
-                </server-list>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <server-details>
-                </server-details>
-            </div>
+            <server-list>
+            </server-list>
+            <server-details>
+            </server-details>
         </div>
         <hr>
         <div class="row">
