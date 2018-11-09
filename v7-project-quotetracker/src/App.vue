@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <progress-bar :count="numberQuotes"></progress-bar>
+        <progress-bar :count="quotes.length"></progress-bar>
         <quote-form :submitQuote="submit"></quote-form>
-        <quote-dashboard></quote-dashboard>
+        <quote-dashboard :quotes="quotes"></quote-dashboard>
         <info></info>
     </div>
 </template>
@@ -16,7 +16,8 @@
     export default {
         data () {
             return {
-                numberQuotes: 0
+                numberQuotes: 0,
+                quotes: []
             }
         },
         components: {
@@ -28,8 +29,10 @@
         methods: {
             submit (quote) {
                 console.log ('submit ', quote)
-                if (this.numberQuotes < 10)
-                    this.numberQuotes++;
+                if (this.numberQuotes < 10) {
+                    this.quotes.push(quote)
+                    this.quotes.length;
+                }
                 else 
                     alert ('Too Many Quotes!')
             }

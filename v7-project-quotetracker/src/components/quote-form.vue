@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row quote-form">
         <div class="col-md-4">
             <form v-on:submit.prevent="onSubmit">
                 <div class="form-group">
@@ -60,4 +60,7 @@ export default {
 </script>
 
 <style>
+.quote-form {
+	margin: 50px 0px;
+}
 </style>
