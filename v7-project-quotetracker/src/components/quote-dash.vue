@@ -1,11 +1,6 @@
 <template>
     <div class="quote-dash">
         <div class="row">
-            <div class="col-xs-12">
-                <div>Quote Dashboard</div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-3" v-for="quote,id in quotes">
                 <div class="quote-item" @click="removeQuote(id)">{{quote}}</div>
             </div>
@@ -32,7 +27,8 @@ export default {
 }
 
 .quote-item {
-	font-style: italic;
+	font-family: 'Arizonia', cursive;
+	font-size: 2em;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	margin-bottom: 20px;
