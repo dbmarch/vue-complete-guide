@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="buffer"></div>
-            <div>Progress Bar: {{count}}</div>
+            <div class="bar-title">Quotes Added</div>
             <div
                 class="progress-bar bg-info"
                 role="progressbar"
                 v-bind:style="barSize"
                 aria-valuemin="0"
                 aria-valuemax="100"
-            ></div>
+            >{{count}}/10</div>
             <div class="buffer"></div>
         </div>
     </div>
@@ -21,8 +21,12 @@ export default {
         return {
             myStyle : {
                 width: 0,
-                height: '20px',
-                borderRadius: '5px'
+                height: '30px',
+                lineHeight: '30px',
+                borderRadius: '10px',
+                verticalAlign: 'middle',
+                fontSize: '2rem'
+                
             }
         }
     },
@@ -41,7 +45,11 @@ export default {
 </script>
 
 <style scoped>
+.bar-title {
+	font-weight: bold;
+	font-size: 3rem;
+}
 .buffer {
-	height: 15px;
+	height: 25px;
 }
 </style>

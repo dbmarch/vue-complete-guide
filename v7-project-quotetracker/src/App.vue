@@ -2,7 +2,7 @@
     <div class="container">
         <progress-bar :count="quotes.length"></progress-bar>
         <quote-form :submitQuote="submit"></quote-form>
-        <quote-dashboard :quotes="quotes"></quote-dashboard>
+        <quote-dashboard :quotes="quotes" :removeQuote="removeQuote"></quote-dashboard>
         <info></info>
     </div>
 </template>
@@ -16,7 +16,6 @@
     export default {
         data () {
             return {
-                numberQuotes: 0,
                 quotes: []
             }
         },
@@ -29,12 +28,16 @@
         methods: {
             submit (quote) {
                 console.log ('submit ', quote)
-                if (this.numberQuotes < 10) {
+                if (this.quotes.length < 10) {
                     this.quotes.push(quote)
-                    this.quotes.length;
                 }
                 else 
                     alert ('Too Many Quotes!')
+            },
+            removeQuote(id) {
+                console.log (`removing item ${id} -  ${this.quotes[id]}`)
+            //    this.quotes = this.quotes.filter(item => item !== quote)
+                 this.quotes.splice(id, 1)
             }
         }
     }

@@ -17,5 +17,7 @@ export default {
 <style>
 footer {
 	background-color: aquamarine;
+	border-radius: 8px;
+	text-align: center;
 }
 </style>

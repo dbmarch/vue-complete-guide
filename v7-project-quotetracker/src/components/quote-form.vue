@@ -1,22 +1,23 @@
 <template>
     <div class="row quote-form">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <form v-on:submit.prevent="onSubmit">
                 <div class="form-group">
-                    <label for="quoteEntry">Quote:</label>
+                    <label class="quote-title" for="quoteEntry">Quote</label>
                     <textarea
                         v-model="quote"
                         type="text"
                         class="form-control form-control"
                         id="quoteEntry"
                         rows="5"
+                        columns="100"
                         placeholder="Enter Quote"
                     ></textarea>
+                    <!-- <button type="reset" class="btn btn-primary center-block">Reset</button> -->
                 </div>
-                <div class="form-group col-md-4 text-center">
+                <div class="form-group col-md-12 text-center">
                     <button type="submit" class="btn btn-primary center-block">Add Quote</button>
                 </div>
-                <!-- <button type="reset" class="btn btn-primary center-block">Reset</button> -->
             </form>
         </div>
     </div>
@@ -31,7 +32,7 @@ export default {
     },
     watch: {
         quote: function(data) {
-            console.log (data)
+            //console.log (data)
         }
     },
     props: {
@@ -60,7 +61,11 @@ export default {
 </script>
 
 <style>
+.quote-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
 .quote-form {
-	margin: 50px 0px;
+	margin: 10% 10%;
 }
 </style>
