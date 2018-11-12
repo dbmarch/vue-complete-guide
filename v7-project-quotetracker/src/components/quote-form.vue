@@ -1,26 +1,27 @@
 <template>
-    <div class="row quote-form">
-        <div class="col-md-12">
-            <form v-on:submit.prevent="onSubmit">
-                <div class="form-group">
-                    <label class="quote-title" for="quoteEntry">Quote</label>
-                    <textarea
-                        v-model="quote"
-                        type="text"
-                        class="form-control form-control"
-                        id="quoteEntry"
-                        rows="5"
-                        columns="100"
-                        placeholder="Enter Quote"
-                    ></textarea>
-                    <!-- <button type="reset" class="btn btn-primary center-block">Reset</button> -->
-                </div>
+    <form v-on:submit.prevent="onSubmit" class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="quote-title" for="quoteEntry">Quote</label>
+                <textarea
+                    v-model="quote"
+                    type="text"
+                    class="form-control"
+                    id="quoteEntry"
+                    rows="5"
+                    columns="100"
+                    placeholder="Enter Quote"
+                ></textarea>
+                <!-- <button type="reset" class="btn btn-primary center-block">Reset</button> -->
+            </div>
+            <div class="row"></div>
+            <div class="row">
                 <div class="form-group col-md-12 text-center">
                     <button type="submit" class="btn btn-primary center-block">Add Quote</button>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </template>
 
 <script>
@@ -65,7 +66,10 @@ export default {
 	font-size: 1.5rem;
 	font-weight: bold;
 }
-.quote-form {
+form {
 	margin: 10% 10%;
+}
+.row {
+	margin: 10px 0;
 }
 </style>
