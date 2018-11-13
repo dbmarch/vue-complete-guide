@@ -19,23 +19,41 @@
                     <input id="lastname" type="text" v-model="userData.lastName">
                 </div>
             </div>-->
-            <full-name v-model="userData.fullName"></full-name>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" v-model="userData.email">
+                    <full-name v-model="userData.fullName"></full-name>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
-                    <label for="email">Password</label>
-                    <input id="password" type="password" v-model="userData.password">
+                    <div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input
+                                class="form-control"
+                                id="email"
+                                type="email"
+                                v-model="userData.email"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
+                    <label for="password">Password</label>
+                    <input
+                        class="form-control"
+                        id="password"
+                        type="password"
+                        v-model="userData.password"
+                    >
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
                     <label for="store">Store Data?</label>
-                    <select id="store" class="form-control" v-model="storeData">
+                    <select class="form-control" id="store" v-model="storeData">
                         <option v-for="choice in choices" :selected="choice == 'No'">{{choice}}</option>
                     </select>
                     <!-- Display the Data Summary ONCE the Form HAS been submitted -->
@@ -46,7 +64,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
-                    <button @click.prevent="submit">Submit</button>
+                    <button type="submit" @click.prevent="submit">Submit</button>
                 </div>
             </div>
             <hr>
@@ -57,7 +75,7 @@
                             <h4>Your Data</h4>
                         </div>
                         <div class="panel-body">
-                            <p>Full Name: {{fullName}}</p>
+                            <!-- <p>Full Name: {{fullName}}</p> -->
                             <p>Full Name: {{userData.fullName}}</p>
                             <p>Mail: {{userData.email}}</p>
                             <p>Password: {{userData.password}}</p>
@@ -74,14 +92,13 @@
     import FullName from './full-name.vue'
 
     export default {
+        
         data() {
             return {
                 userData: {
                     fullName: '',
-                    firstName: '',
-                    lastName: '',
-                    name: '',
-                    email: ''
+                    email: '',
+                    password: ''
                 },
                 storeData: null,
                 choices: ['Yes', 'No'],
@@ -89,10 +106,6 @@
             }
         },
         computed: {
-            fullName: function() {
-                return [this.userData.firstName, this.userData.lastName].join(' ');
-                
-            }
         },
         methods: {
             submit () {
@@ -106,15 +119,5 @@
     }
 </script>
 
-<style>
-#store {
-	width: 50%;
-	display: inline-block;
-}
-label {
-	float: left;
-	clear: left;
-	width: 6em;
-	padding-right: 0.5em;
-}
+<style scoped>
 </style>

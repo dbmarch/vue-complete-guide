@@ -1,46 +1,66 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
-                <label for="firstname">First Name</label>
-                <input id="firstname" type="text" v-model="firstName">
-            </div>
+        <div class="form-group">
+            <label for="firstname">First Name</label>
+            <input
+                id="firstname"
+                class="form-control"
+                type="text"
+                :value="firstName"
+                @input="nameChanged(true, $event)"
+            >
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
-                <label for="lastname">Last Name</label>
-                <input class="" id="lastname" type="text" v-model="lastName">
-            </div>
+        <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input
+                class="form-control"
+                id="lastname"
+                type="text"
+                :value="lastName"
+                @input="nameChanged(false, $event)"
+            >
         </div>
-        <p>{{this.value}}</p>
     </div>
 </template>
 <script>
 export default {
+    props: ['value'],
     data() {
         return {
-            firstName: '',
-            lastName: ''
+        }
+    },
+    computed: {
+        firstName() {
+            console.log (this.value)
+            return this.value.split(" ")[0];
+        },
+        lastName() {
+            return this.value.split(" ")[1];
         }
     },
     methods: {
-        submit () {
-            
-            console.log ('submit: ', this.firstName, this.lastName)
-            this.$emit('input', [this.firstName, this.lastName].join(' '))
-
+        nameChanged(isFirst, event) {
+            let name = '';
+            if (isFirst) {
+                name = event.target.value + ' ' + this.lastName;
+            } else {
+                name = this.firstName + ' ' + event.target.value;
+            }
+            console.log ('emit ', name)
+            this.$emit('input', name)
         }
+        // submit () {
+        //     console.log ('submit: ', this.firstName, this.lastName)
+        //     this.$emit('input', [this.firstName, this.lastName].join(' '))
 
+        // }
+
+    },
+    watch: {
     }
 
 }
 </script>
 
 <style scoped>
-label {
-	float: left;
-	clear: left;
-	width: 6em;
-	padding-right: 0.5em;
-}
 </style>
