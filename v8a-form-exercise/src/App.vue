@@ -1,8 +1,3 @@
-<template>
-    <div class="container">
-        <form>
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <!-- Exercise 1 -->
                     <!-- Create a Signup Form where you retrieve the following Information -->
                     <!-- Full Name (First Name + Last Name) -->
@@ -11,25 +6,34 @@
                     <!-- Store Data? Yes/No -->
                     <!-- Exercise 2 -->
                     <!-- Only display the Form if it has NOT been submitted -->
-
-                    <label for="name">Name</label>
-                    <input id="name" type="text" v-model="userData.name">
+<template>
+    <div class="container">
+        <form>
+            <!-- <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <label for="firstname">First Name</label>
+                    <input id="firstname" type="text" v-model="userData.firstName">
                 </div>
-            </div>
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <label for="lastname">Last Name</label>
+                    <input id="lastname" type="text" v-model="userData.lastName">
+                </div>
+            </div>-->
+            <full-name v-model="userData.fullName"></full-name>
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 from-group">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" v-model="userData.email">
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 from-group">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
                     <label for="email">Password</label>
                     <input id="password" type="password" v-model="userData.password">
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 from-group">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
                     <label for="store">Store Data?</label>
                     <select id="store" class="form-control" v-model="storeData">
                         <option v-for="choice in choices" :selected="choice == 'No'">{{choice}}</option>
@@ -41,7 +45,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 from-group">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
                     <button @click.prevent="submit">Submit</button>
                 </div>
             </div>
@@ -53,7 +57,8 @@
                             <h4>Your Data</h4>
                         </div>
                         <div class="panel-body">
-                            <p>Full Name: {{userData.name}}</p>
+                            <p>Full Name: {{fullName}}</p>
+                            <p>Full Name: {{userData.fullName}}</p>
                             <p>Mail: {{userData.email}}</p>
                             <p>Password: {{userData.password}}</p>
                             <p>Store in Database?: {{storeData}}</p>
@@ -66,10 +71,15 @@
 </template>
 
 <script>
+    import FullName from './full-name.vue'
+
     export default {
         data() {
             return {
                 userData: {
+                    fullName: '',
+                    firstName: '',
+                    lastName: '',
                     name: '',
                     email: ''
                 },
@@ -78,11 +88,20 @@
                 isSubmitted: false
             }
         },
+        computed: {
+            fullName: function() {
+                return [this.userData.firstName, this.userData.lastName].join(' ');
+                
+            }
+        },
         methods: {
             submit () {
                 console.log ('submit');
                 this.isSubmitted = true;
             }
+        },
+        components: {
+            fullName: FullName
         }
     }
 </script>
@@ -91,5 +110,11 @@
 #store {
 	width: 50%;
 	display: inline-block;
+}
+label {
+	float: left;
+	clear: left;
+	width: 6em;
+	padding-right: 0.5em;
 }
 </style>
