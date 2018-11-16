@@ -51,10 +51,10 @@
                 //alert("I am clicked")
             },
             mouser() {
-                console.log ('mouser')
+                console.log ('mouse-enter')
             },
             mouseleft() {
-                console.log ('mouseleft')
+                console.log ('mouse-left')
             }
         }
     }
