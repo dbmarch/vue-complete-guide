@@ -49,7 +49,7 @@
 
 <style>
 .flip-enter {
-	opacity: 0;
+	/* opacity: 0; */
 }
 
 .flip-enter-active {
