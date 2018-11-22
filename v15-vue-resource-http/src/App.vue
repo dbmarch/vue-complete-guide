@@ -30,13 +30,19 @@
                 username: '',
                 email: ''
                 },
-            users: []
+            users: [],
+            resource: {}
         }
     }, 
     methods: {
         submit () {
             console.log (`Submit: user: ${this.user.username}  email: ${this.user.email}`)
-            this.$http.post('https://vuejs-http-fcfe0.firebaseio.com/data.json', this.user)
+            this.resource.save( {}, this.user)
+
+        },
+        submit_original () {
+            console.log (`Submit: user: ${this.user.username}  email: ${this.user.email}`)
+            this.$http.post('data.json', this.user)
                 .then((rsp) => {
                     console.log (rsp)
                 }, (err) => {
@@ -47,7 +53,7 @@
     fetchdata() {
         console.log ('fetchdata')
         let vm = this;
-        this.$http.get('https://vuejs-http-fcfe0.firebaseio.com/data.json')
+        this.$http.get('data.json')
             .then((rsp) => {
                 return rsp.json()       // I don't see any reason to do it this way.
             })
@@ -64,7 +70,7 @@
         fetchdata2() {
         console.log ('fetchdata')
         let vm = this;
-        this.$http.get('https://vuejs-http-fcfe0.firebaseio.com/data.json')
+        this.$http.get('data.json')
             .then((rsp) => {
                 console.log (rsp.json())
                 vm.users= Object.keys(rsp.data).map((key)=> {
@@ -80,6 +86,9 @@
 
     }
 
+    },
+    created() {
+        this.resource = this.$resource('data.json');
     }
     }
 </script>
