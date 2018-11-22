@@ -13,6 +13,9 @@
                 </div>
                 <button class="btn btn-primary" @click="submit">Submit</button>
                 <hr>
+                <input class="form-control" type="text" v-model="node">
+                <br>
+                <br>
                 <button class="btn btn-primary" @click="fetchdata">Get Data</button>
                 <ul class="list-group">
                     <li class="list-group-item" v-for="u in users">{{u.username}} - {{u.email}}</li>
@@ -31,14 +34,15 @@
                 email: ''
                 },
             users: [],
-            resource: {}
+            resource: {}, 
+            node: 'data'
         }
     }, 
     methods: {
         submit () {
             console.log (`Submit: user: ${this.user.username}  email: ${this.user.email}`)
-            this.resource.save( {}, this.user)
-
+            // this.resource.save( {}, this.user)
+            this.resource.saveAlt(this.user);
         },
         submit_original () {
             console.log (`Submit: user: ${this.user.username}  email: ${this.user.email}`)
@@ -52,21 +56,34 @@
         },
     fetchdata() {
         console.log ('fetchdata')
-        let vm = this;
-        this.$http.get('data.json')
-            .then((rsp) => {
+    //     let vm = this;
+    //     this.$http.get('data.json')
+    //         .then((rsp) => {
+    //             return rsp.json()       // I don't see any reason to do it this way.
+    //         })
+    //         .then((rsp) => {
+    //             console.log (rsp);
+    //             vm.users= Object.keys(rsp).map((key)=> {
+    //                 return (rsp[key])
+    //             })
+
+    //         }, (err) => {
+    //             console.log (err);
+    //         })
+        this.resource.getData({node: this.node})
+             .then (rsp => {
                 return rsp.json()       // I don't see any reason to do it this way.
             })
             .then((rsp) => {
                 console.log (rsp);
-                vm.users= Object.keys(rsp).map((key)=> {
+                this.users= Object.keys(rsp).map((key)=> {
                     return (rsp[key])
                 })
 
             }, (err) => {
                 console.log (err);
             })
-    },
+     },
         fetchdata2() {
         console.log ('fetchdata')
         let vm = this;
@@ -88,7 +105,11 @@
 
     },
     created() {
-        this.resource = this.$resource('data.json');
+        const customActions = {
+            saveAlt: {method: 'POST', url: 'alternative.json'},
+            getData: {method: 'GET',  url: '{node}.json'}
+        }
+        this.resource = this.$resource('{node}.json', {}, customActions);
     }
     }
 </script>
