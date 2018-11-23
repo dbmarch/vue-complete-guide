@@ -8,6 +8,7 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import * as types from '../store/types'
     export default {
 
         // either pass an array of strings or an objct with identifers mapped to the getter names.
@@ -16,8 +17,8 @@
 
             },
             ...mapGetters({  // This needs babel-stage-2 installed.
-                counter: 'doubleCounter',
-                clicks: 'stringCounter'
+                counter: types.DOUBLE_COUNTER,
+                clicks: types.CLICK_COUNTER
         })
         }
         // props: ['counter']
